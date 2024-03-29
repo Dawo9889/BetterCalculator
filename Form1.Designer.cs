@@ -23,8 +23,8 @@
         #region Kod generowany przez Projektanta formularzy systemu Windows
 
         /// <summary>
-        /// Metoda wymagana do obsługi projektanta — nie należy modyfikować
-        /// jej zawartości w edytorze kodu.
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -58,13 +58,14 @@
             // 
             this.resultTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.resultTextBox.Location = new System.Drawing.Point(1, 33);
-            this.resultTextBox.MaxLength = 14;
+            this.resultTextBox.MaxLength = 5;
             this.resultTextBox.Name = "resultTextBox";
+            this.resultTextBox.ReadOnly = true;
+            this.resultTextBox.ShortcutsEnabled = false;
             this.resultTextBox.Size = new System.Drawing.Size(298, 47);
             this.resultTextBox.TabIndex = 0;
             this.resultTextBox.Text = "0";
             this.resultTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.resultTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // clearAllDataButton
             // 
@@ -84,6 +85,7 @@
             this.clearTextBox.TabIndex = 3;
             this.clearTextBox.Text = "CE";
             this.clearTextBox.UseVisualStyleBackColor = true;
+            this.clearTextBox.Click += new System.EventHandler(this.clearTextBox_Click);
             // 
             // removeSingleDigit
             // 
@@ -318,7 +320,6 @@
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
