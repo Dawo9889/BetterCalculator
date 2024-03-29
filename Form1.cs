@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace BetterCalculator
@@ -22,14 +23,14 @@ namespace BetterCalculator
             if ((resultTextBox.Text == "0" || OperationSelected) && numericButton.Text != ",")
             {
                 resultTextBox.Text = "";
-                _stringRightOperand = "";
+                //_stringRightOperand = "";
             }
             if (numericButton.Text == ",")
             {
                 if (!resultTextBox.Text.Contains(",") && IsValidLength(resultTextBox.Text))
                 {
                     resultTextBox.Text += numericButton.Text;
-                    _stringRightOperand += numericButton.Text;
+                    //_stringRightOperand += numericButton.Text;
                 }
             }
             else
@@ -78,7 +79,7 @@ namespace BetterCalculator
                 resultTextBox.Text = resultTextBox.Text.Remove(resultTextBox.Text.Length - 1, 1);
             }
 
-            if (resultTextBox.Text == "")
+            if (resultTextBox.Text == "" || resultTextBox.Text== "-")
             {
                 resultTextBox.Text = "0";
             }
@@ -114,6 +115,8 @@ namespace BetterCalculator
             }
             
             resultLabel.Text = $"{_leftOperand}{_operation}{_rightOperand}=";
+            OperationSelected = false;
+            _stringRightOperand = "";
         }
 
         
@@ -127,12 +130,24 @@ namespace BetterCalculator
             
             Button operationButton = (Button)sender;
             _operation = operationButton.Text;
+            OperationSelected = true;
             resultLabel.Text = resultTextBox.Text + _operation;
             _leftOperand = Convert.ToDouble(resultTextBox.Text);
-            OperationSelected = true;
             _stringRightOperand = "";
         }
 
-       
+
+        private void TextBox_TextChanged(object sender, EventArgs e)
+        {
+            int maxLength = 10;
+            int textLength = resultTextBox.Text.Length;
+            if (textLength > maxLength)
+            {
+                
+                float newSize = resultTextBox.Font.Size - 1; 
+                Font newFont = new Font(resultTextBox.Font.FontFamily, newSize, resultTextBox.Font.Style);
+                resultTextBox.Font = newFont;
+            } 
+        }
     }
 }
