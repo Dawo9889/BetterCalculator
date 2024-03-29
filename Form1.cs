@@ -21,7 +21,7 @@ namespace BetterCalculator
         private void numericButton_Click(object sender, EventArgs e)
         {
             Button numericButton = (Button)(sender);
-            if ((resultTextBox.Text == "0" ) && numericButton.Text != ",")
+            if ((resultTextBox.Text == "0" || OperationSelected) && numericButton.Text != ",")
             {
                 resultTextBox.Text = "";
                 _stringRightOperand = "";
@@ -31,6 +31,7 @@ namespace BetterCalculator
                 if (!resultTextBox.Text.Contains(",") && IsValidLength(resultTextBox.Text))
                 {
                     resultTextBox.Text += numericButton.Text;
+                    _stringRightOperand += numericButton.Text;
                 }
             }
             else
@@ -40,6 +41,7 @@ namespace BetterCalculator
                     if (OperationSelected)
                     {
                         _stringRightOperand += numericButton.Text;
+                        
                     }
                     resultTextBox.Text += numericButton.Text;
                 }
@@ -89,23 +91,23 @@ namespace BetterCalculator
             switch (_operation)
             {
                 case "+":
-                    resultTextBox.Text = (_result + Double.Parse(resultTextBox.Text)).ToString();
+                    resultTextBox.Text = (_leftOperand + Double.Parse(_stringRightOperand)).ToString();
                     break;
                 case "-":
-                    resultTextBox.Text = (_result - Double.Parse(resultTextBox.Text)).ToString();
+                    resultTextBox.Text = (_leftOperand - Double.Parse(_stringRightOperand)).ToString();
                     break;
-                case "x":
-                    if (_result == 0 && resultTextBox.Text == "0")
+                case "*":
+                    if (_leftOperand == 0 && resultTextBox.Text == "0")
                     {
-                        _result = 1;
+                        _leftOperand = 1;
                     }
-                    resultTextBox.Text = (_result * Double.Parse(resultTextBox.Text)).ToString();
+                    resultTextBox.Text = (_leftOperand * Double.Parse(_stringRightOperand)).ToString();
                     break;
                 case "/":
-                    double divider = Double.Parse(resultTextBox.Text);
+                    double divider = Double.Parse(_stringRightOperand);
                     if (divider != 0)
                     {
-                        resultTextBox.Text = (_result / divider).ToString();
+                        resultTextBox.Text = (_leftOperand / divider).ToString();
                     }
                     else
                     {
@@ -114,26 +116,29 @@ namespace BetterCalculator
                     }
                           
                     break;
-                default:
-                    resultLabel.Text += $"{resultTextBox}=";
-                    break;
+                // default:
+                //     resultLabel.Text = _leftOperand.ToString() + _operation + _stringRightOperand + "=";
+                //     break;
             }
 
+            resultLabel.Text = _stringRightOperand;
         }
 
         private void operationButton_Click(object sender, EventArgs e)
         {
-            if (OperationSelected)
+            if (_stringRightOperand != "")
             {
+                // _rightOperand = Convert.ToDouble(_stringRightOperand);
                 equalsButon.PerformClick();
             }
-           
+            
             Button operationButton = (Button)sender;
             _operation = operationButton.Text;
             resultLabel.Text = resultTextBox.Text + _operation;
-            _result = Convert.ToDouble(resultTextBox.Text);
+            _leftOperand = Convert.ToDouble(resultTextBox.Text);
+            
             OperationSelected = true;
-
+            _stringRightOperand = "";
         }
 
        
