@@ -105,7 +105,7 @@
             this.resultLabel.Name = "resultLabel";
             this.resultLabel.Size = new System.Drawing.Size(0, 24);
             this.resultLabel.TabIndex = 5;
-            this.resultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.resultLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // numericButton7
             // 
@@ -274,7 +274,7 @@
             this.multiplyButton.Name = "multiplyButton";
             this.multiplyButton.Size = new System.Drawing.Size(70, 50);
             this.multiplyButton.TabIndex = 22;
-            this.multiplyButton.Text = "X";
+            this.multiplyButton.Text = "*";
             this.multiplyButton.UseVisualStyleBackColor = true;
             this.multiplyButton.Click += new System.EventHandler(this.operationButton_Click);
             // 

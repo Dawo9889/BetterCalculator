@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BetterCalculator
@@ -20,6 +13,7 @@ namespace BetterCalculator
         private bool _isOperationPerfomed = false;
         private double _leftOperand = 0;
         private double _rightOperand = 0;
+        private double _result = 0;
         private string valueText = "";
         private void numericButton_Click(object sender, EventArgs e)
         {
@@ -85,6 +79,9 @@ namespace BetterCalculator
 
         private void operationButton_Click(object sender, EventArgs e)
         {
+            Button operationButton = (Button)sender;
+            
+
 
         }
 
