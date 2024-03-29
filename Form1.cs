@@ -13,8 +13,8 @@ namespace BetterCalculator
         private bool OperationSelected = false;
         private double _leftOperand = 0;
         private string _operation = "";
-        private double _result = 0;
         private string _stringRightOperand = "";
+        private double _rightOperand = 0;
 
         private void numericButton_Click(object sender, EventArgs e)
         {
@@ -44,6 +44,7 @@ namespace BetterCalculator
                     resultTextBox.Text += numericButton.Text;
                 }
             }
+            OperationSelected = false;
         }
         
         bool IsValidLength(string text)
@@ -65,8 +66,7 @@ namespace BetterCalculator
         {
             resultTextBox.Text = "0";
             resultLabel.Text = "";
-            _result = 0;
-           
+            
             _leftOperand = 0;
             OperationSelected = false;
         }
@@ -86,42 +86,42 @@ namespace BetterCalculator
 
         private void equalsButton_Click(object sender, EventArgs e)
         {  
+            _rightOperand = Convert.ToDouble(resultTextBox.Text);
             switch (_operation)
             {
                 case "+":
-                    resultTextBox.Text = (_leftOperand + Double.Parse(_stringRightOperand)).ToString();
+                    resultTextBox.Text = (_leftOperand + _rightOperand).ToString();
                     break;
                 case "-":
-                    resultTextBox.Text = (_leftOperand - Double.Parse(_stringRightOperand)).ToString();
+                    resultTextBox.Text = (_leftOperand - _rightOperand).ToString();
                     break;
                 case "*":
-                    resultTextBox.Text = (_leftOperand * Double.Parse(_stringRightOperand)).ToString();
+
+                    resultTextBox.Text = (_leftOperand * _rightOperand).ToString();
                     break;
                 case "/":
-                    double divider = Double.Parse(_stringRightOperand);
-                    if (divider != 0)
+                    if (_rightOperand != 0)
                     {
-                        resultTextBox.Text = (_leftOperand / divider).ToString();
+                        resultTextBox.Text = (_leftOperand / _rightOperand).ToString();
                     }
                     else
                     {
-                        resultTextBox.Text = "Nie dziel przez 0";
-                        // blockButtons();
+                        MessageBox.Show("Nie dziel przez 0");
+                        clearAllDataButton.PerformClick();
                     }
-                          
                     break;
-                // default:
-                //     resultLabel.Text = _leftOperand.ToString() + _operation + _stringRightOperand + "=";
-                //     break;
+               
             }
-            resultLabel.Text = resultTextBox.Text;
+            
+            resultLabel.Text = $"{_leftOperand}{_operation}{_rightOperand}=";
         }
+
+        
 
         private void operationButton_Click(object sender, EventArgs e)
         {
             if (_stringRightOperand != "")
             {
-                // _rightOperand = Convert.ToDouble(_stringRightOperand);
                 equalsButon.PerformClick();
             }
             
@@ -129,7 +129,6 @@ namespace BetterCalculator
             _operation = operationButton.Text;
             resultLabel.Text = resultTextBox.Text + _operation;
             _leftOperand = Convert.ToDouble(resultTextBox.Text);
-            
             OperationSelected = true;
             _stringRightOperand = "";
         }
