@@ -114,7 +114,6 @@ namespace BetterCalculator
                 //     resultLabel.Text = _leftOperand.ToString() + _operation + _stringRightOperand + "=";
                 //     break;
             }
-
             resultLabel.Text = resultTextBox.Text;
         }
 
@@ -122,6 +121,7 @@ namespace BetterCalculator
         {
             if (_stringRightOperand != "")
             {
+                // _rightOperand = Convert.ToDouble(_stringRightOperand);
                 equalsButon.PerformClick();
             }
             
