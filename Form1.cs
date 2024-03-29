@@ -10,19 +10,22 @@ namespace BetterCalculator
             InitializeComponent();
         }
 
-        private bool _isOperationPerfomed = false;
+        private bool OperationSelected = false;
         private double _leftOperand = 0;
         private double _rightOperand = 0;
+        private string _operation = "";
         private double _result = 0;
-        private string valueText = "";
+        private string _valueText = "";
+        private string _stringRightOperand = "";
+
         private void numericButton_Click(object sender, EventArgs e)
         {
             Button numericButton = (Button)(sender);
-            if ((resultTextBox.Text == "0" || _isOperationPerfomed) && numericButton.Text != ",")
+            if ((resultTextBox.Text == "0" ) && numericButton.Text != ",")
+            {
                 resultTextBox.Text = "";
-
-            _isOperationPerfomed = false;
-
+                _stringRightOperand = "";
+            }
             if (numericButton.Text == ",")
             {
                 if (!resultTextBox.Text.Contains(",") && IsValidLength(resultTextBox.Text))
@@ -34,10 +37,15 @@ namespace BetterCalculator
             {
                 if (IsValidLength(resultTextBox.Text + numericButton.Text))
                 {
+                    if (OperationSelected)
+                    {
+                        _stringRightOperand += numericButton.Text;
+                    }
                     resultTextBox.Text += numericButton.Text;
                 }
             }
         }
+        
         bool IsValidLength(string text)
         {
             return text.Length <= 15;
@@ -56,7 +64,11 @@ namespace BetterCalculator
         private void clearAllDataButton_Click(object sender, EventArgs e)
         {
             resultTextBox.Text = "0";
-            _isOperationPerfomed = false;
+            resultLabel.Text = "";
+            _result = 0;
+            _rightOperand = 0;
+            _leftOperand = 0;
+            OperationSelected = false;
         }
 
         private void removeSingleDigit_Click(object sender, EventArgs e)
@@ -72,16 +84,55 @@ namespace BetterCalculator
             }
         }
 
-        private void equalsButon_Click(object sender, EventArgs e)
-        {
+        private void equalsButton_Click(object sender, EventArgs e)
+        {  
+            switch (_operation)
+            {
+                case "+":
+                    resultTextBox.Text = (_result + Double.Parse(resultTextBox.Text)).ToString();
+                    break;
+                case "-":
+                    resultTextBox.Text = (_result - Double.Parse(resultTextBox.Text)).ToString();
+                    break;
+                case "x":
+                    if (_result == 0 && resultTextBox.Text == "0")
+                    {
+                        _result = 1;
+                    }
+                    resultTextBox.Text = (_result * Double.Parse(resultTextBox.Text)).ToString();
+                    break;
+                case "/":
+                    double divider = Double.Parse(resultTextBox.Text);
+                    if (divider != 0)
+                    {
+                        resultTextBox.Text = (_result / divider).ToString();
+                    }
+                    else
+                    {
+                        resultTextBox.Text = "Nie dziel przez 0";
+                        // blockButtons();
+                    }
+                          
+                    break;
+                default:
+                    resultLabel.Text += $"{resultTextBox}=";
+                    break;
+            }
 
         }
 
         private void operationButton_Click(object sender, EventArgs e)
         {
+            if (OperationSelected)
+            {
+                equalsButon.PerformClick();
+            }
+           
             Button operationButton = (Button)sender;
-            
-
+            _operation = operationButton.Text;
+            resultLabel.Text = resultTextBox.Text + _operation;
+            _result = Convert.ToDouble(resultTextBox.Text);
+            OperationSelected = true;
 
         }
 

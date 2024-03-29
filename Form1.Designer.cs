@@ -236,7 +236,7 @@
             this.equalsButon.TabIndex = 18;
             this.equalsButon.Text = "=";
             this.equalsButon.UseVisualStyleBackColor = false;
-            this.equalsButon.Click += new System.EventHandler(this.equalsButon_Click);
+            this.equalsButon.Click += new System.EventHandler(this.equalsButton_Click);
             // 
             // commaButton
             // 
