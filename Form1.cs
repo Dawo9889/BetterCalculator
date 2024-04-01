@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace BetterCalculator
@@ -52,8 +53,7 @@ namespace BetterCalculator
         {
             return text.Length <= 15;
         }
-
-
+        
         private void inverseButton_Click(object sender, EventArgs e)
         {
             resultTextBox.Text = Convert.ToString(-1 * Convert.ToDouble(resultTextBox.Text));
@@ -65,6 +65,7 @@ namespace BetterCalculator
         }
         private void clearAllDataButton_Click(object sender, EventArgs e)
         {
+            BlockUnlockButtons(true);
             resultTextBox.Text = "0";
             resultLabel.Text = "";
             
@@ -107,8 +108,10 @@ namespace BetterCalculator
                     }
                     else
                     {
-                        MessageBox.Show("Nie dziel przez 0");
-                        clearAllDataButton.PerformClick();
+                        // MessageBox.Show("Nie dziel przez 0");
+                        BlockUnlockButtons(false);
+                        resultTextBox.Text = "Nie dziel przez 0";
+                       // clearAllDataButton.PerformClick();
                     }
                     break;
                
@@ -118,9 +121,7 @@ namespace BetterCalculator
             OperationSelected = false;
             _stringRightOperand = "";
         }
-
         
-
         private void operationButton_Click(object sender, EventArgs e)
         {
             if (_stringRightOperand != "")
@@ -149,5 +150,42 @@ namespace BetterCalculator
                 resultTextBox.Font = newFont;
             } 
         }
+        
+        private void BlockUnlockButtons(bool isBlocked)
+        {
+            foreach (Control control in this.Controls)
+            {
+                if (control is GroupBox)
+                {
+                    GroupBox groupBox = (GroupBox)control;
+        
+                    // Iteracja przez kontrolki w GroupBox
+                    foreach (Control groupControl in groupBox.Controls)
+                    {
+                        if (groupControl is Button)
+                        {
+                            Button button = (Button)groupControl;
+                            if (!isBlocked)
+                            {
+                                if(button.Name != "clearAllDataButton") 
+                                    button.Enabled = false; // Zablokowanie przycisku
+                                else
+                                    button.BackColor = Color.Green;
+                            }
+                            else
+                            {
+                                button.Enabled = true;
+                                clearAllDataButton.BackColor = DefaultBackColor;
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
+
+        
+        
     }
+    
 }
