@@ -26,6 +26,15 @@ namespace BetterCalculator
                 resultTextBox.Text = "";
                 //_stringRightOperand = "";
             }
+
+            if (OperationSelected && numericButton.Text == ",")
+            {
+                if (!resultTextBox.Text.Contains(",") && IsValidLength(resultTextBox.Text))
+                {
+                    resultTextBox.Text = "0" + numericButton.Text;
+                    
+                }
+            }
             if (numericButton.Text == ",")
             {
                 if (!resultTextBox.Text.Contains(",") && IsValidLength(resultTextBox.Text))
